@@ -9,7 +9,7 @@ class TestLogin:
 
     @allure.story("Successful Login on SauceDemo")
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_login_sucesso(self, driver):
+    def test_successful_login(self, driver):
         with allure.step("Go to SauceDemo page"):
             driver.get("https://www.saucedemo.com/")
 

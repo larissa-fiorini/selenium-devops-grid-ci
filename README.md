@@ -6,3 +6,15 @@
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI%2FCD-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 ![Allure Report](https://img.shields.io/badge/Allure_Report-Live-FF6C37?style=for-the-badge&logo=qameta&logoColor=white)
+
+## 🚀 Run locally
+### Via Docker Compose (Selenium Grid)
+```bash
+# 1. Grid infrastructure
+docker-compose up -d
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Run tests on remote Grid
+pytest --executor=remote --browser=chrome -n auto
