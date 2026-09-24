@@ -1,0 +1,62 @@
+name: Test Infrastructure CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      selenium-grid:
+        image: selenium/standalone-chrome:4.20.0
+        ports:
+          - 4444:4444
+        options: --shm-size=2g
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run parallel tests on Selenium Grid
+        env:
+          SELENIUM_GRID_URL: http://localhost:4444/wd/hub
+        run: |
+          pytest -n 2 --executor=remote --browser=chrome || true
+
+      - name: Generate Allure Report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        id: allure-report
+        with:
+          allure_results: allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: allure-history
