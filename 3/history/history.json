@@ -1,1 +1,0 @@
-{"48db3c3047f98cac4194751cb72d2c09":{"statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1},"items":[{"uid":"28e7b770dc701ae5","reportUrl":"https://larissa-fiorini.github.io/selenium-devops-grid-ci/3/#testresult/28e7b770dc701ae5","status":"passed","time":{"start":1790270938673,"stop":1790270939306,"duration":633}}]}}
